@@ -36,9 +36,9 @@ const userLogin = async (req,res) => {
     if(!verifiedPassword) return res.status(404).send("invalid email or password")
 
     //assign a token
-    const token_id = jwt.sign({_id:user._id}, process.env.SECRET_CODE, {expiresIn: "30d"})
+     const token_id = jwt.sign({_id:user._id}, process.env.SECRET_CODE, {expiresIn: "30d"})
 
-    res.header("authorization", token_id).send(token_id)
+     res.header("authorization", token_id).send(token_id)
 };
 
 module.exports = { addUser, userLogin}
