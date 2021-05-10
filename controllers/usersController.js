@@ -16,10 +16,6 @@ const addUser = async (req,res) =>{
     const userEmail = await User.findOne({ email: req.body.email })
     if(userEmail) return res.status(409).send("email already exist")
 
-    //assign a token
-    const token_id = jwt.sign({_id:user._id}, process.env.SECRET_CODE, {expiresIn: "30d"})
-
-    res.header("authorization", token_id).send(token_id)
 
     const newUser = new User({
         firstname: req.body.firstname,
