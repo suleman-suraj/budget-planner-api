@@ -6,7 +6,7 @@ const jwt = require("jsonwebtoken")
 const addUser = async (req,res) =>{
     //validate a user
     const { error } = validateAddUser.validate(req.body)
-    if(error) return res.status(402).send(error.details[0].message);
+    if(error) return res.status(400).send(error.details[0].message);
 
     //complexity level & hashing
     const salt = await bcrypt.genSalt(10)
@@ -14,7 +14,7 @@ const addUser = async (req,res) =>{
 
     //find user from db
     const userEmail = await User.findOne({ email: req.body.email })
-    if(userEmail) return res.status(403).send("email already exist")
+    if(userEmail) return res.status(409).send("email already exist")
 
     const newUser = new User({
         name: req.body.name,
@@ -29,7 +29,7 @@ const userLogin = async (req,res) => {
 
     // user verification
     const user = await User.findOne({email:req.body.email});
-    if(!user) return res.status(404).send("account is not there");
+    if(!user) return res.status(404).send("account is not found");
 
     //password verification
     const verifiedPassword = await bcrypt.compare(req.body.password,user.password)
