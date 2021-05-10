@@ -17,7 +17,10 @@ const addUser = async (req,res) =>{
     if(userEmail) return res.status(409).send("email already exist")
 
     const newUser = new User({
-        name: req.body.name,
+        firstname: req.body.firstname,
+        lastname: req.body.lastname,
+        birthdate: req.body.birthdate,
+        phone: req.body.phone,
         email: req.body.email,
         password: hashedPassword
     })
